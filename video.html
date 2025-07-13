@@ -29,7 +29,7 @@
     .video-section__divider{margin-bottom:2.5rem;height:2.5rem}
     .video-section__player-container{display:flex;justify-content:center;width:100%;margin-bottom:1rem}
     .video-section__player{max-width:749px;width:100%;height:250px;object-fit:contain;border:none;border-radius:.5rem}
-    .video-section__cta{margin-top:-1rem}
+    .video-section__cta{margin-top:-1rem;text-decoration: none;}
 
     /* Button Component */
     .button{display:inline-block;font-weight:600;text-align:center;border-radius:.75rem;transition:transform .2s;border:none;cursor:pointer}
@@ -95,13 +95,13 @@
 <body class="video-page">
   <div class="video-section">
     <h2 class="video-section__title">
-      Bu sahifani <span class="video-section__highlight">yopmang</span>, bo'lmasa bu videoni butun umrga <span class="video-section__highlight--danger">yo'qotasiz.</span>
+      Bu sahifani <span class="video-section__highlight">yopmang</span>, Bepul qo’llanmani olish uchun <span class="video-section__highlight">Yuklab Olish</span> tugmasini bosing
     </h2>
 
     <img src="img/Line.svg" class="video-section__divider" alt="Divider line" loading="lazy">
 
     <div class="video-section__player-container">
-      <iframe
+      <!-- <iframe
         id="youtube-video"
         class="video-section__player"
         src="https://www.youtube.com/embed/KOSRcXDqUlI?si=NEDO47j0gLHbDLZE"
@@ -110,230 +110,18 @@
         referrerpolicy="strict-origin-when-cross-origin"
         allowfullscreen
         loading="lazy">
-      </iframe>
+      </iframe> -->
     </div>
 
-    <button id="btn" class="button button--primary video-section__cta">
+    <a href="./img/5%20Sinalgan%20Usul1.pdf" download  id="btn" class="button button--primary video-section__cta">
       Yuklab olish
-    </button>
+    </a>
   </div>
 
-  <!-- Modal with extended form -->
-  <div class="modal modal--hidden">
-    <div class="modal__backdrop">
-      <div class="modal__overlay"></div>
-      <form id="form" class="modal__form">
-        <button type="button" id="close" class="modal__close">
-          <svg width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-            <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"></path>
-          </svg>
-        </button>
-
-        <div class="form-field">
-          <label for="name" class="form-field__label">Ismingiz:</label>
-          <input type="text" id="name" name="Ismingiz" class="form-field__input" placeholder="Ismingiz..." required>
-          <span class="form-field__error error-message"></span>
-        </div>
-
-        <div class="form-field">
-          <label for="phone" class="form-field__label">Telefon raqamingiz:</label>
-          <input type="tel" id="phone" name="Telefon" class="form-field__input" placeholder="Telefon raqamingiz..." maxlength="15" required>
-          <span class="form-field__error error-message"></span>
-        </div>
-
-        <div class="form-field">
-          <label for="jop" class="form-field__label">Biznesingiz nomi va faoliyat sohangiz:</label>
-          <input type="text" id="jop" name="Biznesingiz nomi" class="form-field__input" placeholder="Biznesingiz nomi va faoliyat sohangiz..." required>
-          <span class="form-field__error error-message"></span>
-        </div>
-
-        <div class="form-field">
-          <label for="jopIsue" class="form-field__label">Marketingdagi sizni qiynayotgan muammo:</label>
-          <input type="text" id="jopIsue" name="Marketingdagi sizni qiynayotgan muammo:" class="form-field__input" placeholder="Marketingdagi sizni qiynayotgan muammo..." required>
-          <span class="form-field__error error-message"></span>
-        </div>
-
-        <div class="form-field--radio">
-          <label class="form-field__label">Oldin marketing agentliklari bilan ishlaganmisiz:</label>
-          <div class="form-field__radio-group">
-            <div class="form-field__radio-option">
-              <input name="ishlaganmisiz" type="radio" id="yes" class="form-field__radio-input" value="Ha">
-              <label for="yes" class="form-field__radio-label">Ha</label>
-            </div>
-            <div class="form-field__radio-option">
-              <input name="ishlaganmisiz" type="radio" id="no" class="form-field__radio-input" value="Yo'q">
-              <label for="no" class="form-field__radio-label">Yo'q</label>
-            </div>
-          </div>
-          <span class="form-field__error error-message-checkbox"></span>
-        </div>
-
-        <button type="submit" class="button button--secondary button--full-width">
-          Yuborish
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Loader -->
-  <div id="loader" class="loader loader--hidden">
-    <div class="loader__spinner">
-      <div class="loader__bar loader__bar--1"></div>
-      <div class="loader__bar loader__bar--2"></div>
-      <div class="loader__bar loader__bar--3"></div>
-      <div class="loader__bar loader__bar--4"></div>
-      <div class="loader__bar loader__bar--5"></div>
-      <div class="loader__bar loader__bar--6"></div>
-      <div class="loader__bar loader__bar--7"></div>
-      <div class="loader__bar loader__bar--8"></div>
-      <div class="loader__bar loader__bar--9"></div>
-      <div class="loader__bar loader__bar--10"></div>
-      <div class="loader__bar loader__bar--11"></div>
-      <div class="loader__bar loader__bar--12"></div>
-    </div>
-  </div>
-
-  <!-- Ultra-optimized JavaScript with Google Sheets integration -->
-  <script>
-    // Google Sheets configuration for video page
-    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxcG93ncf2IKPKaC36qRNkaR88pXqDTQwnhypMKqvoYagZu3LDJUjYDX7TFJIkhdyEIYA/exec';
-
-    // Cache DOM elements
-    const modal = document.querySelector(".modal");
-    const btn = document.querySelector("#btn");
-    const close = document.querySelector("#close");
-    const overlay = document.querySelector(".modal__overlay");
-    const form = document.getElementById("form");
-    const loader = document.getElementById("loader");
-
-    // Modal functions
-    const showModal = () => {
-      modal.classList.remove("modal--hidden");
-      modal.classList.add("modal--visible");
-    };
-
-    const hideModal = () => {
-      modal.classList.add("modal--hidden");
-      modal.classList.remove("modal--visible");
-    };
-
-    // Event listeners
-    btn?.addEventListener("click", showModal);
-    close?.addEventListener("click", hideModal);
-    overlay?.addEventListener("click", hideModal);
-
-    // Phone number formatting
-    document.getElementById("phone")?.addEventListener("input", function (event) {
-      let value = event.target.value.replace(/\D/g, "");
-      let formatted = "";
-
-      if (value.length > 0) formatted += "(" + value.substring(0, 2);
-      if (value.length >= 3) formatted += ") " + value.substring(2, 5);
-      if (value.length >= 6) formatted += "-" + value.substring(5, 7);
-      if (value.length >= 8) formatted += "-" + value.substring(7, 9);
-
-      event.target.value = formatted;
-    });
-
-    // Form validation and submission
-    form?.addEventListener("submit", async function (event) {
-      event.preventDefault();
-
-      const name = document.getElementById("name").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const business = document.getElementById("jop").value.trim();
-      const jopIsue = document.getElementById("jopIsue").value.trim();
-
-      // Get radio button value
-      const radioInputs = document.querySelectorAll('input[name="ishlaganmisiz"]');
-      let radioValue = "";
-      radioInputs.forEach(input => {
-        if (input.checked) radioValue = input.value;
-      });
-
-      let isValid = true;
-
-      // Clear previous errors
-      document.querySelectorAll(".error-message").forEach(el => el.textContent = "");
-      document.querySelector(".error-message-checkbox").textContent = "";
-
-      // Validation
-      if (!name) {
-        document.querySelector("#name + .error-message").textContent = "Iltimos, ismingizni kiriting.";
-        isValid = false;
-      }
 
 
-      if (!business) {
-        document.querySelector("#jop + .error-message").textContent = "Iltimos, biznesingiz nomi va faoliyat sohasini kiriting.";
-        isValid = false;
-      }
 
-      if (!jopIsue) {
-        document.querySelector("#jopIsue + .error-message").textContent = "Iltimos, marketingdagi muammoingizni kiriting.";
-        isValid = false;
-      }
+  <script src="./js/index.js"></script>
 
-      if (!radioValue) {
-        document.querySelector(".error-message-checkbox").textContent = "Iltimos, variantlardan birini tanlang.";
-        isValid = false;
-      }
-
-      if (isValid) {
-        loader.classList.remove("loader--hidden");
-        loader.classList.add("loader--visible");
-
-        try {
-          const formData = new FormData();
-          formData.append("Ismingiz", name);
-          formData.append("Telefon", phone);
-          formData.append("Biznesingiz nomi", business);
-          formData.append("Marketingdagi sizni qiynayotgan muammo:", jopIsue);
-          formData.append("Marketing agentligi bilan ishlaganmi", radioValue);
-          formData.append("Sana", new Date().toLocaleString('uz-UZ'));
-          formData.append("Sahifa", "Video Page");
-
-          const response = await fetch(GOOGLE_SHEETS_URL, {
-            method: "POST",
-            body: formData,
-            mode: 'no-cors'
-          });
-
-          // Success feedback
-          hideModal();
-          form.reset();
-
-          // Show success message
-          const successMsg = document.createElement('div');
-          successMsg.innerHTML = `
-            <div style="position:fixed;top:20px;right:20px;background:#10b981;color:white;padding:1rem 2rem;border-radius:0.5rem;z-index:9999;box-shadow:0 10px 25px rgba(0,0,0,0.1);">
-              ✅ Ma'lumot muvaffaqiyatli yuborildi!
-            </div>
-          `;
-          document.body.appendChild(successMsg);
-
-          setTimeout(() => successMsg.remove(), 3000);
-
-        } catch (error) {
-          console.error("Error:", error);
-
-          // Show error message
-          const errorMsg = document.createElement('div');
-          errorMsg.innerHTML = `
-            <div style="position:fixed;top:20px;right:20px;background:#ef4444;color:white;padding:1rem 2rem;border-radius:0.5rem;z-index:9999;box-shadow:0 10px 25px rgba(0,0,0,0.1);">
-              ❌ Xatolik yuz berdi. Qayta urinib ko'ring.
-            </div>
-          `;
-          document.body.appendChild(errorMsg);
-
-          setTimeout(() => errorMsg.remove(), 3000);
-
-        } finally {
-          loader.classList.add("loader--hidden");
-          loader.classList.remove("loader--visible");
-        }
-      }
-    });
-  </script>
 </body>
 </html>

@@ -117,7 +117,7 @@
           (ushbu <span class="hero__highlight">metrikalardan</span> bittasini ko'rsatkichini oshirish orqali sotuvlaringizni <span class="hero__highlight">2X</span> gacha oshirishingi mumkin)
         </p>
         <img class="hero__image hero__image--mobile" src="img/person-optimized.webp" alt="person" width="300" height="272" loading="eager" fetchpriority="high">
-        <button id="btn" class="button button--primary hero__button">videoni ko'rish</button>
+        <button id="btn" style="font-size: 16px; width: 100%;" class="button button--primary hero__button">Bepul qo’llanmani olish</button>
       </div>
       <img class="hero__image hero__image--desktop" src="img/person-optimized.webp" alt="person" width="400" height="363" loading="eager" fetchpriority="high">
     </div>
@@ -152,7 +152,7 @@
           <span id="jop-error" class="form-field__error"></span>
         </div>
 
-        <button type="submit" class="button button--secondary button--full-width">
+        <button class="button button--secondary button--full-width">
           Ro'yxatdan O'tish
         </button>
       </form>
@@ -177,136 +177,9 @@
     </div>
   </div>
 
-<!-- JavaScript -->
-  <script>
-    // Google Sheets konfiguratsiyasi
-    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyKwNkLOENB0SXrnLHxQEQGfsDHCtiKm9MdxOkPruLtN9ykrcm2DigALfkXMv1fBKqcQA/exec';
 
-    // DOM elementlarni keshlash
-    const btn = document.getElementById('btn');
-    const modal = document.querySelector('.modal');
-    const closeBtn = document.getElementById('close');
-    const overlay = document.querySelector('.modal__overlay');
-    const form = document.getElementById('form');
-    const loader = document.getElementById('loader');
-    const nameInput = document.getElementById('name');
-    const phoneInput = document.getElementById('phone');
-    const jobInput = document.getElementById('jop');
+  <script src="./js/index.js"></script>
 
-    // Modal funksiyalari
-    const showModal = () => {
-      modal.classList.remove('modal--hidden');
-      modal.classList.add('modal--visible');
-    };
 
-    const hideModal = () => {
-      modal.classList.add('modal--hidden');
-      modal.classList.remove('modal--visible');
-    };
-
-    // Hodisa tinglovchilari
-    btn?.addEventListener('click', showModal);
-    closeBtn?.addEventListener('click', hideModal);
-    overlay?.addEventListener('click', hideModal);
-
-    // Telefon raqam formatlash
-    phoneInput?.addEventListener('input', (e) => {
-      let value = e.target.value.replace(/\D/g, '');
-      let formatted = '';
-
-      if (value.length > 0) formatted += '(' + value.substring(0, 2);
-      if (value.length >= 3) formatted += ') ' + value.substring(2, 5);
-      if (value.length >= 6) formatted += '-' + value.substring(5, 7);
-      if (value.length >= 8) formatted += '-' + value.substring(7, 9);
-
-      e.target.value = formatted;
-    });
-
-    // Forma tekshiruvi
-    const validateForm = () => {
-      const name = nameInput.value.trim();
-      const phone = phoneInput.value.trim();
-      const job = jobInput.value.trim();
-
-      document.querySelectorAll('.form-field__error').forEach(el => el.textContent = '');
-
-      let isValid = true;
-
-      if (!name) {
-        document.getElementById('name-error').textContent = 'Ism kiritish majburiy';
-        isValid = false;
-      }
-
-      if (!phone) {
-        document.getElementById('phone-error').textContent = 'Telefon raqamni kiriting';
-        isValid = false;
-      }
-
-      if (!job) {
-        document.getElementById('jop-error').textContent = 'Biznes nomi kiritish majburiy';
-        isValid = false;
-      }
-
-      return isValid;
-    };
-
-    // Google Sheets’ga yuborish
-    const submitToGoogleSheets = async (formData) => {
-      try {
-        await fetch(GOOGLE_SHEETS_URL, {
-          method: 'POST',
-          body: formData,
-          mode: 'no-cors' // Google Apps Script uchun zarur
-        });
-        return { success: true };
-      } catch (error) {
-        console.error('Google Sheets yuborishda xatolik:', error);
-        return { success: false, error };
-      }
-    };
-
-    // Forma yuborish ishlovchisi
-    form?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      if (!validateForm()) {
-        return;
-      }
-
-      // Yuklash animatsiyasini ko‘rsatish
-      loader.classList.remove('loader--hidden');
-      loader.classList.add('loader--visible');
-
-      // Forma ma’lumotlarini tayyorlash
-      const formData = new FormData();
-      formData.append('Ismingiz', nameInput.value.trim());
-      formData.append('Telefon', phoneInput.value.trim());
-      formData.append('Biznesingiz nomi', jobInput.value.trim());
-      formData.append('Sana', new Date().toLocaleString('uz-UZ'));
-
-      // Google Sheets’ga yuborish
-      const result = await submitToGoogleSheets(formData);
-
-      // Yuklash animatsiyasini yashirish
-      loader.classList.add('loader--hidden');
-      loader.classList.remove('loader--visible');
-
-      if (result.success) {
-        // Muvaffaqiyatli yuborilgandan so‘ng sahifani almashtirish
-        window.location.href = "/video.html";
-      } else {
-        // Xatolik bo‘lsa foydalanuvchiga xabar berish
-        alert('Xatolik yuz berdi. Iltimos, qaytadan urinib ko‘ring.');
-      }
-    });
-
-    // Video sahifasini oldindan yuklash
-    setTimeout(() => {
-      const link = document.createElement('link');
-      link.rel = 'prefetch';
-      link.href = 'video.html';
-      document.head.appendChild(link);
-    }, 1000);
-  </script>
 </body>
 </html>

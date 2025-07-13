@@ -1,140 +1,116 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.querySelector('.modal');
-  const closeButton = document.getElementById('close');
-  const overlay = document.querySelector('.overlay');
-  const btn = document.querySelector("#btn");
-  const url = `https://script.google.com/macros/s/AKfycbyKwNkLOENB0SXrnLHxQEQGfsDHCtiKm9MdxOkPruLtN9ykrcm2DigALfkXMv1fBKqcQA/exec`;
-  let player;
-  let intervalId = null;
-  let lastShownMinute = 0;
+const GOOGLE_SHEETS_URL =
+  "https://script.google.com/macros/s/AKfycbwWU6Ny9zAfPahLa3DvIs5xP8gx7RFkEbifPZrVkcruXQlRtYcOFpGwyDWJBCGfV9_k/exec";
 
-  // Initialize AOS
-  if (typeof AOS !== 'undefined') {
-    AOS.init();
-  }
+const btn = document.getElementById("btn");
+const modal = document.querySelector(".modal");
+const closeBtn = document.getElementById("close");
+const overlay = document.querySelector(".modal__overlay");
+const form = document.getElementById("form");
+const loader = document.getElementById("loader");
+const nameInput = document.getElementById("name");
+const phoneInput = document.getElementById("phone");
+const jobInput = document.getElementById("jop");
 
-  // Function to open modal
-  const openModal = () => {
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-  };
+// Modal control functions
+const showModal = () => {
+  modal.classList.remove("modal--hidden");
+  modal.classList.add("modal--visible");
+};
 
-  // Function to close modal
-  const closeModal = () => {
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-  };
+const hideModal = () => {
+  modal.classList.add("modal--hidden");
+  modal.classList.remove("modal--visible");
+};
 
-  // Close modal when clicking overlay
-  overlay.addEventListener('click', closeModal);
+// Event listeners for modal
+btn?.addEventListener("click", showModal);
+closeBtn?.addEventListener("click", hideModal);
+overlay?.addEventListener("click", hideModal);
 
-  // Open modal when clicking button
-  btn.addEventListener('click', openModal);
-
-  // Close modal when clicking close button
-  closeButton.addEventListener('click', closeModal);
-
-  // Check video time to show modal every 5 minutes
-  const checkVideoTime = () => {
-    const currentTime = player.getCurrentTime();
-    const currentMinute = Math.floor(currentTime / 60);
-    if (currentMinute !== lastShownMinute && currentMinute % 5 === 0) {
-      openModal();
-      lastShownMinute = currentMinute;
-    }
-  };
-
-  // YouTube player initialization
-  const onYouTubeIframeAPIReady = () => {
-    player = new YT.Player('youtube-video', {
-      events: {
-        'onStateChange': (event) => {
-          if (event.data === YT.PlayerState.PLAYING) {
-            if (!intervalId) {
-              intervalId = setInterval(checkVideoTime, 1000);
-            }
-          } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
-            clearInterval(intervalId);
-            intervalId = null;
-          }
-        }
-      }
-    });
-  };
-
-  // Load YouTube API script
-  const tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  document.body.appendChild(tag);
-  window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
-
-  // Phone input formatting
-  document.getElementById("phone").addEventListener("input", function (event) {
-    let value = event.target.value.replace(/\D/g, ""); // Remove all non-digit characters
-    let formatted = "";
-
-    if (value.length > 0) {
-      formatted += "(" + value.substring(0, 2);
-    }
-    if (value.length >= 3) {
-      formatted += ") " + value.substring(2, 5);
-    }
-    if (value.length >= 6) {
-      formatted += "-" + value.substring(5, 7);
-    }
-    if (value.length >= 8) {
-      formatted += "-" + value.substring(7, 9);
-    }
-
-    event.target.value = formatted;
-  });
-
-  // Form submission handling
-  document.getElementById("form").addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent form from submitting
-    const loader = document.querySelector("#loader");
-    // Clear previous error messages
-    document.getElementById("name-error").textContent = "";
-    document.getElementById("phone-error").textContent = "";
-    document.getElementById("jop-error").textContent = "";
-
-    // Get form values
-    const name = document.getElementById("name").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const business = document.getElementById("jop").value.trim();
-
-    // Validate form inputs
-    let isValid = true;
-    if (!name) {
-      document.getElementById("name-error").textContent = "Iltimos, ismingizni kiriting.";
-      isValid = false;
-    }
-    const phonePattern = /^\(\d{2}\) \d{3}-\d{2}-\d{2}$/;
-    if (!phone || !phonePattern.test(phone)) {
-      document.getElementById("phone-error").textContent = "Telefon raqamingizni (88) 000-00-00 formatida kiriting.";
-      isValid = false;
-    }
-    if (!business) {
-      document.getElementById("jop-error").textContent = "Iltimos, biznesingiz nomi va faoliyat sohasini kiriting.";
-      isValid = false;
-    }
-
-    if (isValid) {
-      loader.classList.remove("hidden");
-      loader.classList.add("flex");
-
-      // Prepare form data
-      const formData = new FormData();
-      formData.append("Ismingiz", name);
-      formData.append("Telefon", phone);
-      formData.append("Biznesingiz nomi", business);
-
-      // Send data to the server
-      fetch(url, {
-        method: "POST",
-        body: formData,
-      })
-      .then(window.location = "https://asoschilar.uz/video.html")
-    }
-  });
+// Phone number formatting
+phoneInput?.addEventListener("input", (e) => {
+  let value = e.target.value.replace(/\D/g, "");
+  let formatted = "";
+  if (value.length > 0) formatted += "(" + value.substring(0, 2);
+  if (value.length >= 3) formatted += ") " + value.substring(2, 5);
+  if (value.length >= 6) formatted += "-" + value.substring(5, 7);
+  if (value.length >= 8) formatted += "-" + value.substring(7, 9);
+  e.target.value = formatted;
 });
+
+// Form validation
+const validateForm = () => {
+  const name = nameInput.value.trim();
+  const phone = phoneInput.value.trim();
+  const job = jobInput.value.trim();
+  document.querySelectorAll(".form-field__error").forEach((el) => (el.textContent = ""));
+  let isValid = true;
+  if (!name) {
+    document.getElementById("name-error").textContent = "Ism kiritish majburiy";
+    isValid = false;
+  }
+  if (!phone) {
+    document.getElementById("phone-error").textContent = "Telefon raqamni kiriting";
+    isValid = false;
+  }
+  if (!job) {
+    document.getElementById("jop-error").textContent = "Biznes nomi kiritish majburiy";
+    isValid = false;
+  }
+  return isValid;
+};
+
+// // Handle form submission on the main page
+if (window.location.pathname === "/") {
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+
+    loader.classList.remove("loader--hidden");
+    loader.classList.add("loader--visible");
+
+    const now = new Date();
+    const formData = {
+      Ism: nameInput.value.trim(),
+      "Telefon raqam": phoneInput.value.trim(),
+      "Biznes turi": jobInput.value.trim(),
+      "Sana, Soat": now.toLocaleDateString("uz-UZ") + " " + now.toLocaleTimeString("uz-UZ"),
+    };
+
+    localStorage.setItem("registrationData", JSON.stringify(formData));
+
+    loader.classList.add("loader--hidden");
+    loader.classList.remove("loader--visible");
+    window.location.href = "video.html";
+  });
+}
+
+// Send stored data to Google Sheets on video.html
+if (window.location.pathname.includes("video.html")) {
+  const sendStoredData = () => {
+    const storedData = localStorage.getItem("registrationData");
+    if (!storedData) return;
+
+    const data = JSON.parse(storedData);
+    const formDataToSend = new FormData();
+    // formDataToSend.append("sheetName", "Lead");
+    for (const key in data) {
+      formDataToSend.append(key, data[key]);
+    }
+
+    fetch(GOOGLE_SHEETS_URL, {
+      method: "POST",
+      mode: "no-cors",
+      body: formDataToSend,
+    })
+      .then(() => {
+        localStorage.removeItem("registrationData");
+      })
+      .catch((error) => {
+        console.error("Error sending data:", error);
+      });
+  };
+
+//   document.addEventListener("DOMContentLoaded", sendStoredData);
+  window.addEventListener("load", sendStoredData);
+}
