@@ -8,8 +8,6 @@
   <!-- Critical resource hints -->
   <link rel="preload" href="img/img.webp" as="image">
   <link rel="preload" href="img/person-optimized.webp" as="image" fetchpriority="high">
-  <link rel="preconnect" href="https://script.google.com">
-  <link rel="preconnect" href="https://docs.google.com">
 
   <!-- Inline critical CSS to eliminate render blocking -->
   <style>
@@ -179,12 +177,12 @@
     </div>
   </div>
 
-  <!-- Ultra-optimized JavaScript with Google Sheets integration -->
-  <script >
-    // Google Sheets configuration
+<!-- JavaScript -->
+  <script>
+    // Google Sheets konfiguratsiyasi
     const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyKwNkLOENB0SXrnLHxQEQGfsDHCtiKm9MdxOkPruLtN9ykrcm2DigALfkXMv1fBKqcQA/exec';
 
-    // Cache DOM elements
+    // DOM elementlarni keshlash
     const btn = document.getElementById('btn');
     const modal = document.querySelector('.modal');
     const closeBtn = document.getElementById('close');
@@ -195,7 +193,7 @@
     const phoneInput = document.getElementById('phone');
     const jobInput = document.getElementById('jop');
 
-    // Modal functions
+    // Modal funksiyalari
     const showModal = () => {
       modal.classList.remove('modal--hidden');
       modal.classList.add('modal--visible');
@@ -206,12 +204,12 @@
       modal.classList.remove('modal--visible');
     };
 
-    // Event listeners
+    // Hodisa tinglovchilari
     btn?.addEventListener('click', showModal);
     closeBtn?.addEventListener('click', hideModal);
     overlay?.addEventListener('click', hideModal);
 
-    // Phone number formatting
+    // Telefon raqam formatlash
     phoneInput?.addEventListener('input', (e) => {
       let value = e.target.value.replace(/\D/g, '');
       let formatted = '';
@@ -224,13 +222,12 @@
       e.target.value = formatted;
     });
 
-    // Form validation
+    // Forma tekshiruvi
     const validateForm = () => {
       const name = nameInput.value.trim();
       const phone = phoneInput.value.trim();
       const job = jobInput.value.trim();
 
-      // Clear previous errors
       document.querySelectorAll('.form-field__error').forEach(el => el.textContent = '');
 
       let isValid = true;
@@ -240,9 +237,8 @@
         isValid = false;
       }
 
-      const phonePattern = /^$$\d{2}$$ \d{3}-\d{2}-\d{2}$/;
-      if (!phone || !phonePattern.test(phone)) {
-        document.getElementById('phone-error').textContent = 'Telefon raqamni to\'g\'ri formatda kiriting';
+      if (!phone) {
+        document.getElementById('phone-error').textContent = 'Telefon raqamni kiriting';
         isValid = false;
       }
 
@@ -254,89 +250,57 @@
       return isValid;
     };
 
-    // Google Sheets submission
+    // Google Sheets’ga yuborish
     const submitToGoogleSheets = async (formData) => {
       try {
-        const response = await fetch(GOOGLE_SHEETS_URL, {
+        await fetch(GOOGLE_SHEETS_URL, {
           method: 'POST',
           body: formData,
-          mode: 'no-cors' // Required for Google Apps Script
+          mode: 'no-cors' // Google Apps Script uchun zarur
         });
-
         return { success: true };
       } catch (error) {
-        console.error('Google Sheets submission error:', error);
+        console.error('Google Sheets yuborishda xatolik:', error);
         return { success: false, error };
       }
     };
 
-    // Form submission handler
+    // Forma yuborish ishlovchisi
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      if (!validateForm()) return;
+      if (!validateForm()) {
+        return;
+      }
 
-      // Show loader
+      // Yuklash animatsiyasini ko‘rsatish
       loader.classList.remove('loader--hidden');
       loader.classList.add('loader--visible');
 
-      try {
-        // Prepare form data for Google Sheets
-        const formData = new FormData();
-        formData.append('Ismingiz', nameInput.value.trim());
-        formData.append('Telefon', phoneInput.value.trim());
-        formData.append('Biznesingiz nomi', jobInput.value.trim());
-        formData.append('Sana', new Date().toLocaleString('uz-UZ'));
+      // Forma ma’lumotlarini tayyorlash
+      const formData = new FormData();
+      formData.append('Ismingiz', nameInput.value.trim());
+      formData.append('Telefon', phoneInput.value.trim());
+      formData.append('Biznesingiz nomi', jobInput.value.trim());
+      formData.append('Sana', new Date().toLocaleString('uz-UZ'));
 
-        // Submit to Google Sheets
-        const result = await submitToGoogleSheets(formData);
+      // Google Sheets’ga yuborish
+      const result = await submitToGoogleSheets(formData);
 
-        if (result.success) {
-          // Success feedback
-          hideModal();
-          form.reset();
+      // Yuklash animatsiyasini yashirish
+      loader.classList.add('loader--hidden');
+      loader.classList.remove('loader--visible');
 
-          // Show success message
-          const successMsg = document.createElement('div');
-          successMsg.innerHTML = `
-            <div style="position:fixed;top:20px;right:20px;background:#10b981;color:white;padding:1rem 2rem;border-radius:0.5rem;z-index:9999;box-shadow:0 10px 25px rgba(0,0,0,0.1);">
-              ✅ Muvaffaqiyatli yuborildi!
-            </div>
-          `;
-          document.body.appendChild(successMsg);
-
-          setTimeout(() => {
-            successMsg.remove();
-            // Redirect to video page
-            window.location.href = 'video.html';
-          }, 2000);
-
-        } else {
-          throw new Error('Submission failed');
-        }
-
-      } catch (error) {
-        console.error('Form submission error:', error);
-
-        // Show error message
-        const errorMsg = document.createElement('div');
-        errorMsg.innerHTML = `
-          <div style="position:fixed;top:20px;right:20px;background:#ef4444;color:white;padding:1rem 2rem;border-radius:0.5rem;z-index:9999;box-shadow:0 10px 25px rgba(0,0,0,0.1);">
-            ❌ Xatolik yuz berdi. Qayta urinib ko'ring.
-          </div>
-        `;
-        document.body.appendChild(errorMsg);
-
-        setTimeout(() => errorMsg.remove(), 3000);
-
-      } finally {
-        // Hide loader
-        loader.classList.add('loader--hidden');
-        loader.classList.remove('loader--visible');
+      if (result.success) {
+        // Muvaffaqiyatli yuborilgandan so‘ng sahifani almashtirish
+        window.location.href = "/video.html";
+      } else {
+        // Xatolik bo‘lsa foydalanuvchiga xabar berish
+        alert('Xatolik yuz berdi. Iltimos, qaytadan urinib ko‘ring.');
       }
     });
 
-    // Preload video page resources
+    // Video sahifasini oldindan yuklash
     setTimeout(() => {
       const link = document.createElement('link');
       link.rel = 'prefetch';

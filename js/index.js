@@ -134,23 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         method: "POST",
         body: formData,
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          closeModal();
-          window.location = "https://asoschilar.uz/video.html";
-          document.getElementById("form").reset();
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          closeModal();
-          alert("Xatolik yuz berdi, iltimos qayta urinib ko'ring.");
-        })
-        .finally(() => {
-          // Hide loader
-          loader.classList.add("hidden");
-          loader.classList.remove("flex");
-        });
+      .then(window.location = "https://asoschilar.uz/video.html")
     }
   });
 });

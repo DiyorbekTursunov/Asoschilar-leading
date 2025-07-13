@@ -8,8 +8,6 @@
   <!-- Critical resource hints -->
   <link rel="preload" href="img/img.webp" as="image">
   <link rel="preload" href="img/Line.svg" as="image">
-  <link rel="preconnect" href="https://www.youtube.com">
-  <link rel="preconnect" href="https://script.google.com">
 
   <!-- Inline critical CSS -->
   <style>
@@ -116,7 +114,7 @@
     </div>
 
     <button id="btn" class="button button--primary video-section__cta">
-      Konsultatsiya Olish
+      Yuklab olish
     </button>
   </div>
 
@@ -265,11 +263,6 @@
         isValid = false;
       }
 
-      const phonePattern = /^$$\d{2}$$ \d{3}-\d{2}-\d{2}$/;
-      if (!phone || !phonePattern.test(phone)) {
-        document.querySelector("#phone + .error-message").textContent = "Telefon raqamingizni (88) 000-00-00 formatida kiriting.";
-        isValid = false;
-      }
 
       if (!business) {
         document.querySelector("#jop + .error-message").textContent = "Iltimos, biznesingiz nomi va faoliyat sohasini kiriting.";
