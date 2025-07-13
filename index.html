@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asoschilar</title>
+
+  <!-- Preload critical resources -->
+  <link rel="preload" href="img/img.webp" as="image">
+  <link rel="preload" href="img/person.webp" as="image">
+
+  <!-- External CSS file -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="page">
+  <section class="hero">
+    <div class="hero__container">
+      <div class="hero__content">
+        <h2 class="hero__title">
+          Bu <span class="hero__highlight">metrikalarni</span> bilmasangiz,
+        </h2>
+        <h2 class="hero__subtitle">
+          Lead sifatini oshirishning 5 ta sinalgan usuli
+        </h2>
+        <p class="hero__description">
+          (ushbu <span class="hero__highlight">metrikalardan</span> bittasini ko'rsatkichini oshirish orqali sotuvlaringizni <span class="hero__highlight">2X</span> gacha oshirishingi mumkin)
+        </p>
+        <img class="hero__image hero__image--mobile" src="img/person.webp" alt="person" width="300" height="400" loading="eager">
+        <button id="btn" class="button button--primary hero__button">videoni ko'rish</button>
+      </div>
+      <img class="hero__image hero__image--desktop" src="img/person.webp" alt="person" loading="eager">
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <div class="modal modal--hidden">
+    <div class="modal__backdrop">
+      <div class="modal__overlay"></div>
+      <form id="form" class="modal__form">
+        <button type="button" id="close" class="modal__close">
+          <svg width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+            <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"></path>
+          </svg>
+        </button>
+
+        <div class="form-field">
+          <label for="name" class="form-field__label">Ismingiz:</label>
+          <input type="text" id="name" name="Ismingiz" class="form-field__input" placeholder="Ismingiz...">
+          <span id="name-error" class="form-field__error"></span>
+        </div>
+
+        <div class="form-field">
+          <label for="phone" class="form-field__label">Telefon raqamingiz:</label>
+          <input type="text" id="phone" name="Telefon" class="form-field__input" placeholder="Telefon raqamingiz...">
+          <span id="phone-error" class="form-field__error"></span>
+        </div>
+
+        <div class="form-field">
+          <label for="jop" class="form-field__label">Biznesingiz nomi va faoliyat sohangiz:</label>
+          <input type="text" id="jop" name="Biznesingiz nomi" class="form-field__input" placeholder="Biznesingiz nomi va faoliyat sohangiz...">
+          <span id="jop-error" class="form-field__error"></span>
+        </div>
+
+        <button type="submit" class="button button--secondary button--full-width">
+          Ro'yxatdan O'tish
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Loader -->
+  <div id="loader" class="loader loader--hidden">
+    <div class="loader__spinner">
+      <div class="loader__bar loader__bar--1"></div>
+      <div class="loader__bar loader__bar--2"></div>
+      <div class="loader__bar loader__bar--3"></div>
+      <div class="loader__bar loader__bar--4"></div>
+      <div class="loader__bar loader__bar--5"></div>
+      <div class="loader__bar loader__bar--6"></div>
+      <div class="loader__bar loader__bar--7"></div>
+      <div class="loader__bar loader__bar--8"></div>
+      <div class="loader__bar loader__bar--9"></div>
+      <div class="loader__bar loader__bar--10"></div>
+      <div class="loader__bar loader__bar--11"></div>
+      <div class="loader__bar loader__bar--12"></div>
+    </div>
+  </div>
+
+  <!-- Optimized JavaScript -->
+  <script>
+    // Optimized modal and form handling
+    const btn = document.getElementById('btn');
+    const modal = document.querySelector('.modal');
+    const closeBtn = document.getElementById('close');
+    const overlay = document.querySelector('.modal__overlay');
+    const form = document.getElementById('form');
+    const loader = document.getElementById('loader');
+
+    // Show modal
+    btn?.addEventListener('click', () => {
+      modal?.classList.remove('modal--hidden');
+      modal?.classList.add('modal--visible');
+    });
+
+    // Hide modal
+    [closeBtn, overlay]?.forEach(el =>
+      el?.addEventListener('click', () => {
+        modal?.classList.add('modal--hidden');
+        modal?.classList.remove('modal--visible');
+      })
+    );
+
+    // Form validation and submission
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const job = document.getElementById('jop').value.trim();
+
+      // Clear previous errors
+      ['name-error', 'phone-error', 'jop-error'].forEach(id =>
+        document.getElementById(id).textContent = ''
+      );
+
+      let hasError = false;
+
+      if (!name) {
+        document.getElementById('name-error').textContent = 'Ism kiritish majburiy';
+        hasError = true;
+      }
+
+      if (!phone) {
+        document.getElementById('phone-error').textContent = 'Telefon raqam kiritish majburiy';
+        hasError = true;
+      }
+
+      if (!job) {
+        document.getElementById('jop-error').textContent = 'Biznes nomi kiritish majburiy';
+        hasError = true;
+      }
+
+      if (!hasError) {
+        loader?.classList.remove('loader--hidden');
+        loader?.classList.add('loader--visible');
+
+        // Simulate form submission
+        setTimeout(() => {
+          loader?.classList.add('loader--hidden');
+          loader?.classList.remove('loader--visible');
+          modal?.classList.add('modal--hidden');
+          modal?.classList.remove('modal--visible');
+          alert('Muvaffaqiyatli ro\'yxatdan o\'tdingiz!');
+          form.reset();
+        }, 2000);
+      }
+    });
+  </script>
+</body>
+</html>

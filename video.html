@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asoschilar - Video</title>
+
+  <!-- Preload critical resources -->
+  <link rel="preload" href="img/img.webp" as="image">
+  <link rel="preload" href="img/Line.svg" as="image">
+
+  <!-- External CSS file -->
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body class="video-page">
+  <div class="video-section">
+    <h2 class="video-section__title">
+      Bu sahifani <span class="video-section__highlight">yopmang</span>, bo'lmasa bu videoni butun umrga <span class="video-section__highlight--danger">yo'qotasiz.</span>
+    </h2>
+
+    <img src="img/Line.svg" class="video-section__divider" alt="Divider line" loading="lazy">
+
+    <div class="video-section__player-container">
+      <iframe
+        id="youtube-video"
+        class="video-section__player"
+        src="https://www.youtube.com/embed/KOSRcXDqUlI?si=NEDO47j0gLHbDLZE"
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+        loading="lazy">
+      </iframe>
+    </div>
+
+    <button id="btn" class="button button--primary video-section__cta">
+      Konsultatsiya Olish
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal modal--hidden">
+    <div class="modal__backdrop">
+      <div class="modal__overlay"></div>
+      <form id="form" class="modal__form" action="https://script.google.com/macros/s/AKfycbxcG93ncf2IKPKaC36qRNkaR88pXqDTQwnhypMKqvoYagZu3LDJUjYDX7TFJIkhdyEIYA/exec">
+        <button type="button" id="close" class="modal__close">
+          <svg width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+            <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"></path>
+          </svg>
+        </button>
+
+        <div class="form-field">
+          <label for="name" class="form-field__label">Ismingiz:</label>
+          <input type="text" id="name" name="Ismingiz" class="form-field__input" placeholder="Ismingiz...">
+          <span class="form-field__error error-message"></span>
+        </div>
+
+        <div class="form-field">
+          <label for="phone" class="form-field__label">Telefon raqamingiz:</label>
+          <input type="text" id="phone" name="Telefon" class="form-field__input" placeholder="Telefon raqamingiz..." maxlength="15">
+          <span class="form-field__error error-message"></span>
+        </div>
+
+        <div class="form-field">
+          <label for="jop" class="form-field__label">Biznesingiz nomi va faoliyat sohangiz:</label>
+          <input type="text" id="jop" name="Biznesingiz nomi" class="form-field__input" placeholder="Biznesingiz nomi va faoliyat sohangiz...">
+          <span class="form-field__error error-message"></span>
+        </div>
+
+        <div class="form-field">
+          <label for="jopIsue" class="form-field__label">Marketingdagi sizni qiynayotgan muammo:</label>
+          <input type="text" id="jopIsue" name="Marketingdagi sizni qiynayotgan muammo:" class="form-field__input" placeholder="Marketingdagi sizni qiynayotgan muammo...">
+          <span class="form-field__error error-message"></span>
+        </div>
+
+        <div class="form-field--radio">
+          <label class="form-field__label">Oldin marketing agentliklari bilan ishlaganmisiz:</label>
+          <div class="form-field__radio-group">
+            <div class="form-field__radio-option">
+              <input name="ishlaganmisiz" type="radio" id="yes" class="form-field__radio-input">
+              <label for="yes" class="form-field__radio-label">Ha</label>
+            </div>
+            <div class="form-field__radio-option">
+              <input name="ishlaganmisiz" type="radio" id="no" class="form-field__radio-input">
+              <label for="no" class="form-field__radio-label">Yo'q</label>
+            </div>
+          </div>
+          <span class="form-field__error error-message-checkbox"></span>
+        </div>
+
+        <button type="submit" class="button button--secondary button--full-width">
+          Yuborish
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Loader -->
+  <div id="loader" class="loader loader--hidden">
+    <div class="loader__spinner">
+      <div class="loader__bar loader__bar--1"></div>
+      <div class="loader__bar loader__bar--2"></div>
+      <div class="loader__bar loader__bar--3"></div>
+      <div class="loader__bar loader__bar--4"></div>
+      <div class="loader__bar loader__bar--5"></div>
+      <div class="loader__bar loader__bar--6"></div>
+      <div class="loader__bar loader__bar--7"></div>
+      <div class="loader__bar loader__bar--8"></div>
+      <div class="loader__bar loader__bar--9"></div>
+      <div class="loader__bar loader__bar--10"></div>
+      <div class="loader__bar loader__bar--11"></div>
+      <div class="loader__bar loader__bar--12"></div>
+    </div>
+  </div>
+
+  <!-- Optimized JavaScript -->
+  <script>
+    // Modal functionality
+    const modal = document.querySelector(".modal");
+    const btn = document.querySelector("#btn");
+    const close = document.querySelector("#close");
+    const overlay = document.querySelector(".modal__overlay");
+
+    // Show modal
+    btn?.addEventListener("click", () => {
+      modal?.classList.remove("modal--hidden");
+      modal?.classList.add("modal--visible");
+    });
+
+    // Hide modal
+    [close, overlay]?.forEach(el =>
+      el?.addEventListener("click", () => {
+        modal?.classList.add("modal--hidden");
+        modal?.classList.remove("modal--visible");
+      })
+    );
+
+    // Phone number formatting
+    document.getElementById("phone")?.addEventListener("input", function (event) {
+      let value = event.target.value.replace(/\D/g, "");
+      let formatted = "";
+
+      if (value.length > 0) {
+        formatted += "(" + value.substring(0, 2);
+      }
+      if (value.length >= 3) {
+        formatted += ") " + value.substring(2, 5);
+      }
+      if (value.length >= 6) {
+        formatted += "-" + value.substring(5, 7);
+      }
+      if (value.length >= 8) {
+        formatted += "-" + value.substring(7, 9);
+      }
+
+      event.target.value = formatted;
+    });
+
+    // Form submission
+    document.getElementById("form")?.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const loader = document.querySelector("#loader");
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const business = document.getElementById("jop").value.trim();
+      const jopIsue = document.getElementById("jopIsue").value.trim();
+
+      // Get radio button value
+      const yes = document.querySelector("#yes");
+      const no = document.querySelector("#no");
+      let radioValue = "";
+
+      if (yes?.checked) {
+        radioValue = "Ha";
+      } else if (no?.checked) {
+        radioValue = "Yo'q";
+      }
+
+      let isValid = true;
+
+      // Clear previous errors
+      document.querySelectorAll(".error-message").forEach(el => el.textContent = "");
+      document.querySelector(".error-message-checkbox").textContent = "";
+
+      // Validation
+      if (!name) {
+        document.querySelector("#name + .error-message").textContent = "Iltimos, ismingizni kiriting.";
+        isValid = false;
+      }
+
+      const phonePattern = /^$$\d{2}$$ \d{3}-\d{2}-\d{2}$/;
+      if (!phone || !phonePattern.test(phone)) {
+        document.querySelector("#phone + .error-message").textContent = "Telefon raqamingizni (88) 000-00-00 formatida kiriting.";
+        isValid = false;
+      }
+
+      if (!business) {
+        document.querySelector("#jop + .error-message").textContent = "Iltimos, biznesingiz nomi va faoliyat sohasini kiriting.";
+        isValid = false;
+      }
+
+      if (!jopIsue) {
+        document.querySelector("#jopIsue + .error-message").textContent = "Iltimos, marketingdagi muammoingizni kiriting.";
+        isValid = false;
+      }
+
+      if (!radioValue) {
+        document.querySelector(".error-message-checkbox").textContent = "Iltimos, variantlardan birini tanlang.";
+        isValid = false;
+      }
+
+      if (isValid) {
+        loader?.classList.remove("loader--hidden");
+        loader?.classList.add("loader--visible");
+
+        const data = new FormData();
+        data.append("Ismingiz", name);
+        data.append("Telefon", phone);
+        data.append("Biznesingiz nomi", business);
+        data.append("Marketingdagi sizni qiynayotgan muammo:", jopIsue);
+        data.append("Marketing agentligi bilan ishlaganmi", radioValue);
+
+        fetch("https://script.google.com/macros/s/AKfycbwjBFepkQLvi6vvq26OdS9ZxlhfTn_yCMDOHi2UFgAL2ppAZPDKkduzo9Cqq1UxhgBW7Q/exec", {
+          method: "POST",
+          body: data,
+        })
+        .then(response => response.json())
+        .then(result => {
+          console.log("Response:", result);
+          modal?.classList.add("modal--hidden");
+          modal?.classList.remove("modal--visible");
+          document.getElementById("form").reset();
+          alert("Ma'lumot yuborildi!");
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          modal?.classList.add("modal--hidden");
+          modal?.classList.remove("modal--visible");
+          alert("Xatolik yuz berdi, iltimos qayta urinib ko'ring.");
+        })
+        .finally(() => {
+          loader?.classList.add("loader--hidden");
+          loader?.classList.remove("loader--visible");
+        });
+      }
+    });
+  </script>
+</body>
+</html>
