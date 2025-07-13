@@ -124,6 +124,7 @@ img {
 
 .hero__image--mobile {
   display: block;
+  margin: 0 auto;
 }
 
 .hero__image--desktop {
