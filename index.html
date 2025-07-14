@@ -466,7 +466,7 @@
         !function (f, b, e, v, n, t, s) {
             if (f.fbq) return; n = f.fbq = function () {
                 n.callMethod ?
-                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
             };
             if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
             n.queue = []; t = b.createElement(e); t.async = !0;
@@ -537,17 +537,33 @@
                     <span id="jop-error" class="form-field__error"></span>
                 </div>
 
-                <button class="button button--secondary button--full-width">
+                <button type="submit" class="button button--secondary button--full-width">
                     Ro'yxatdan O'tish
                 </button>
             </form>
         </div>
     </div>
 
+    <!-- Loader -->
+    <div id="loader" class="loader loader--hidden">
+        <div class="loader__spinner">
+            <div class="loader__bar loader__bar--1"></div>
+            <div class="loader__bar loader__bar--2"></div>
+            <div class="loader__bar loader__bar--3"></div>
+            <div class="loader__bar loader__bar--4"></div>
+            <div class="loader__bar loader__bar--5"></div>
+            <div class="loader__bar loader__bar--6"></div>
+            <div class="loader__bar loader__bar--7"></div>
+            <div class="loader__bar loader__bar--8"></div>
+            <div class="loader__bar loader__bar--9"></div>
+            <div class="loader__bar loader__bar--10"></div>
+            <div class="loader__bar loader__bar--11"></div>
+            <div class="loader__bar loader__bar--12"></div>
+        </div>
+    </div>
+
 
     <script src="./js/index.js"></script>
-
-
 </body>
 
 </html>

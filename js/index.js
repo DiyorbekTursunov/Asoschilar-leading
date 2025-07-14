@@ -64,6 +64,8 @@ const validateForm = () => {
 if (window.location.pathname === "/") {
   form?.addEventListener("submit", (e) => {
     e.preventDefault();
+    console.log("sneded");
+    
     if (!validateForm()) return;
 
     loader.classList.remove("loader--hidden");
